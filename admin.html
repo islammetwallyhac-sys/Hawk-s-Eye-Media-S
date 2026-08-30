@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hawk's Eye Media — Admin</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/admin.css"></head><body>
+<div id="login" class="login"><div><p class="eyebrow">HAWK'S EYE MEDIA</p><h1>Admin<br><em>Studio.</em></h1>
+<label class="field">Email<input id="loginEmail" type="email" placeholder="you@studio.com" autocomplete="username"></label>
+<label class="field">Password<input id="password" type="password" placeholder="Password" autocomplete="current-password"></label>
+<button id="loginBtn" onclick="login()">Enter Dashboard ↗</button>
+<small>Sign in with the admin account created in Supabase. Every change here saves straight to the cloud database — there's no separate "publish" step for the data itself, only the per-album Publish switch.</small></div></div>
+
+<div id="app" class="app hidden">
+<aside>
+  <a class="brand" href="index.html">Hawk's Eye <small>MEDIA</small></a>
+  <button data-tab="overview" class="tab-btn active">Overview</button>
+  <button data-tab="albums" class="tab-btn">Albums & Photos</button>
+  <button data-tab="categories" class="tab-btn">Categories</button>
+  <button data-tab="services" class="tab-btn">Services</button>
+  <button data-tab="inquiries" class="tab-btn">Inquiries <span id="inqBadge" class="badge hidden">0</span></button>
+  <button data-tab="settings" class="tab-btn">Site Settings</button>
+  <a href="index.html">← View Website</a>
+  <a href="#" onclick="logout();return false;">Log out</a>
+</aside>
+<main>
+  <div class="top"><div><p class="eyebrow">CONTROL ROOM</p><h2 id="title">Overview</h2></div><div id="saveStatus" class="save-status"></div></div>
+
+  <section id="overview" class="tab">
+    <div class="cards">
+      <div><b id="albumCount">0</b><span>Albums</span></div>
+      <div><b id="featuredCount">0</b><span>Featured</span></div>
+      <div><b id="photoCount">0</b><span>Photos</span></div>
+      <div><b id="privateCount">0</b><span>Private Galleries</span></div>
+      <div><b id="serviceCount">0</b><span>Services</span></div>
+      <div><b id="newInquiryCount">0</b><span>New Inquiries</span></div>
+    </div>
+    <div class="note"><b>Live editing enabled.</b><p>Everything you change on the Albums, Categories, Services and Settings tabs is stored directly in your Supabase database and read by the public site on every page load — there is nothing to redeploy.</p></div>
+  </section>
+
+  <section id="albums" class="tab hidden">
+    <div class="toolbar"><button onclick="createAlbum()">+ New Album</button><button class="secondary" onclick="exportBackup()">Export Backup</button></div>
+    <div id="albumList"></div>
+  </section>
+
+  <section id="categories" class="tab hidden">
+    <div class="toolbar"><button onclick="createCategory()">+ New Category</button></div>
+    <div id="categoryList"></div>
+  </section>
+
+  <section id="services" class="tab hidden">
+    <div class="toolbar"><button onclick="createService()">+ New Service</button></div>
+    <div id="serviceList"></div>
+  </section>
+
+  <section id="inquiries" class="tab hidden">
+    <div class="toolbar filter-toolbar">
+      <button class="chip active" data-status="all">All</button>
+      <button class="chip" data-status="new">New</button>
+      <button class="chip" data-status="read">Read</button>
+      <button class="chip" data-status="contacted">Contacted</button>
+      <button class="chip" data-status="archived">Archived</button>
+    </div>
+    <div id="inquiryList"></div>
+  </section>
+
+  <section id="settings" class="tab hidden">
+    <form id="settingsForm">
+      <h3 class="group-title">Brand & Hero</h3>
+      <label>Brand name<input name="brand_name"></label>
+      <label>Hero tagline<input name="tagline"></label>
+      <label>Hero title<input name="hero_title" placeholder="See different."></label>
+      <label>Hero subtitle<input name="hero_subtitle" placeholder="Capture everything."></label>
+      <label>Hero image<span class="file-row"><img id="heroPreview" class="thumb-preview hidden"><input type="file" id="heroImageInput" accept="image/*"></span></label>
+
+      <h3 class="group-title">About</h3>
+      <label>About title<input name="about_title"></label>
+      <label>Short bio (used on Home)<textarea name="about_short_bio"></textarea></label>
+      <label>Long bio (used on About page)<textarea name="about_long_bio"></textarea></label>
+      <label>Photography philosophy<textarea name="about_philosophy"></textarea></label>
+      <label>Years of experience<input name="about_experience_years" type="number" min="0"></label>
+      <label>Profile image<span class="file-row"><img id="aboutPreview" class="thumb-preview hidden"><input type="file" id="aboutImageInput" accept="image/*"></span></label>
+
+      <h3 class="group-title">Contact</h3>
+      <label>WhatsApp number (digits only, country code first)<input name="whatsapp"></label>
+      <label>Phone<input name="phone"></label>
+      <label>Email<input name="email" type="email"></label>
+      <label>Instagram URL<input name="instagram_url" placeholder="Leave blank until ready"></label>
+      <label>Facebook URL<input name="facebook_url" placeholder="Leave blank until ready"></label>
+
+      <h3 class="group-title">Watermark defaults</h3>
+      <label class="inline"><input type="checkbox" name="watermark_enabled_default"> Enable watermark on public galleries by default</label>
+      <label>Watermark opacity (0–1)<input name="watermark_opacity_default" type="number" step="0.05" min="0" max="1"></label>
+
+      <h3 class="group-title">SEO</h3>
+      <label>Site title<input name="seo_title"></label>
+      <label>Meta description<textarea name="seo_description"></textarea></label>
+
+      <button type="submit">Save Settings</button>
+    </form>
+  </section>
+</main>
+</div>
+
+<!-- Album photo manager (modal-style panel) -->
+<div id="albumPanel" class="album-panel hidden">
+  <div class="album-panel-inner">
+    <div class="album-panel-head">
+      <h2 id="albumPanelTitle">Album</h2>
+      <button onclick="closeAlbumPanel()" class="close-btn">×</button>
+    </div>
+    <div class="album-panel-body">
+      <div class="album-fields">
+        <label>Title<input id="af_title"></label>
+        <label>Category<select id="af_category"></select></label>
+        <label>Location<input id="af_location"></label>
+        <label>Event date<input id="af_date" type="date"></label>
+        <label>Description<textarea id="af_description"></textarea></label>
+        <label>Tags (comma-separated)<input id="af_tags" placeholder="wedding, cairo, cinematic"></label>
+        <div class="toggle-row">
+          <label class="inline"><input type="checkbox" id="af_published"> Published</label>
+          <label class="inline"><input type="checkbox" id="af_featured"> Featured</label>
+          <label class="inline"><input type="checkbox" id="af_private"> Private client album</label>
+          <label class="inline"><input type="checkbox" id="af_download"> Allow downloads</label>
+          <label class="inline"><input type="checkbox" id="af_selection"> Allow client selection</label>
+          <label class="inline"><input type="checkbox" id="af_watermark"> Watermark enabled</label>
+        </div>
+        <div id="privateAccessRow" class="hidden">
+          <p class="hint">Private galleries get a secure link + optional password, managed separately once the client-access system is deployed (see SETUP notes). This album is flagged private and will not appear in the public portfolio.</p>
+        </div>
+        <button onclick="saveAlbumFields()">Save Album Details</button>
+      </div>
+
+      <div class="album-photos">
+        <div id="dropzone" class="dropzone">
+          <p><b>Drag & drop photos here</b> or click to choose files</p>
+          <input type="file" id="fileInput" multiple accept="image/*" class="hidden">
+        </div>
+        <div id="uploadProgress" class="upload-progress hidden"></div>
+        <div id="photoGrid" class="photo-grid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script><script src="assets/admin.js"></script></body></html>

@@ -11,5 +11,5 @@
 // ============================================================
 window.HAWKS_CONFIG = {
   supabaseUrl: 'https://armxrkxkuliahdtwjxod.supabase.co',
-  supabaseAnonKey: 'sb_secret_9ivJZQfyR1_UOsYZR4LjTQ_07JeNGDI'
+  supabaseAnonKey: 'sb_publishable_vDT80qwpnSFID9-EHFv5WQ_bi7Xdwyh'
 };

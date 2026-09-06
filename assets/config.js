@@ -11,5 +11,5 @@
 // ============================================================
 window.HAWKS_CONFIG = {
   supabaseUrl: 'https://armxrkxkuliahdtwjxod.supabase.co',
-  supabaseAnonKey: 'sb_publishable_vDT80qwpnSFID9-EHFv5WQ_bi7Xdwyh'
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFybXhya3hrdWxpYWhkdHdqeG9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNDE4MDYsImV4cCI6MjEwMzcxNzgwNn0.zmbDZMPwAZozDtg9TpNEXUFHNaBxcm89l2aLch8NTfE'
 };

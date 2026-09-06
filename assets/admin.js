@@ -103,7 +103,7 @@ function flashSaved(msg = 'Saved'){
 async function loadData(){
   const [{ data: cats }, { data: albs }, { data: svcs }, { data: st }, { data: inqs }] = await Promise.all([
     sb.from('categories').select('*').order('sort_order'),
-    sb.from('albums').select('*, category:categories(name), photos(id)').order('created_at', { ascending: false }),
+    sb.from('albums').select('*, category:categories(name), photos!album_id(id)').order('created_at', { ascending: false }),
     sb.from('services').select('*').order('sort_order'),
     sb.from('site_settings').select('*').eq('id','main').single(),
     sb.from('inquiries').select('*').order('created_at', { ascending: false })

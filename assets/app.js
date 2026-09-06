@@ -56,7 +56,7 @@ async function loadData(){
   try {
     const [{ data: cats, error: e1 }, { data: albs, error: e2 }, { data: svcs, error: e3 }, { data: st, error: e4 }] = await Promise.all([
       sb.from('categories').select('*').order('sort_order'),
-      sb.from('albums').select('*, category:categories(name,slug), photos(*)').eq('is_published', true).eq('is_private', false).order('sort_order', { foreignTable: 'photos' }),
+      sb.from('albums').select('*, category:categories(name,slug), photos!album_id(*)').eq('is_published', true).eq('is_private', false).order('sort_order', { foreignTable: 'photos' }),
       sb.from('services').select('*').eq('is_active', true).order('sort_order'),
       sb.from('site_settings').select('*').eq('id','main').single()
     ]);

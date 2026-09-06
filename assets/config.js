@@ -5,12 +5,11 @@
 //   Supabase Dashboard → Project Settings → API
 //   - "Project URL"      -> supabaseUrl
 //   - "anon public" key  -> supabaseAnonKey
-// NEVER put the "service_role" key here — only the public anon key.
-// Until these are filled in, the site + admin will run in offline
-// demo mode using the built-in sample data (nothing will be shared
-// between visitors, and admin changes will not be saved anywhere).
+// NEVER put the "service_role" / secret key here — only the public
+// anon/publishable key. Until these are filled in, the site + admin
+// will run in offline demo mode using the built-in sample data.
 // ============================================================
 window.HAWKS_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: ''
+  supabaseUrl: 'https://armxrkxkuliahdtwjxod.supabase.co',
+  supabaseAnonKey: 'sb_publishable_vDT80qwpnSFID9-EHFv5WQ_bi7Xdwyh'
 };

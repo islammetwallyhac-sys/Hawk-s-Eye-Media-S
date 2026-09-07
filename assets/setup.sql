@@ -94,7 +94,7 @@ create table if not exists public.site_settings (
 insert into public.site_settings (id, brand_name, tagline, whatsapp, phone, email)
 values ('main', 'Hawk''s Eye Media',
         'Cinematic photography that turns real moments, people and places into visual stories.',
-        '201000000000', '+20 100 000 0000', 'hello@hawkseyemedia.com')
+        '201064675155', '+20 106 467 5155', 'islam.metwally@outlook.com')
 on conflict (id) do nothing;
 
 -- ---------- Inquiries ----------

@@ -9,9 +9,9 @@ const demo = {
   categories: [{name:'Weddings'},{name:'Portraits'},{name:'Product'},{name:'Street'},{name:'Automotive'},{name:'Architecture'}],
   settings: {
     brand_name: "Hawk's Eye Media",
-    whatsapp: '201000000000',
-    phone: '+20 100 000 0000',
-    email: 'hello@hawkseyemedia.com',
+    whatsapp: '201064675155',
+    phone: '+20 106 467 5155',
+    email: 'islam.metwally@outlook.com',
     tagline: 'Cinematic photography that turns real moments, people and places into visual stories.',
     about_short_bio: "Seven years ago, photography started as a passion and a way of seeing the world differently. Today, that same curiosity shapes every frame created under Hawk's Eye Media."
   },
@@ -208,7 +208,7 @@ $('#contactForm').onsubmit = async e => {
   }
 
   const msg = `New Inquiry — ${settings.brand_name || "Hawk's Eye Media"}\n\nName: ${payload.name}\nPhone: ${payload.phone}\nEmail: ${payload.email || ''}\nService: ${payload.service || ''}\nDate: ${payload.event_date || ''}\nLocation: ${payload.location || ''}\nMessage: ${payload.message || ''}`;
-  const wa = ((settings.whatsapp) || '201000000000').replace(/[^0-9]/g,'');
+  const wa = ((settings.whatsapp) || '201064675155').replace(/[^0-9]/g,'');
   window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(msg), '_blank');
   e.target.reset();
 };
